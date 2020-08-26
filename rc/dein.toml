@@ -1,0 +1,77 @@
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+
+[[plugins]]
+repo = 'octol/vim-cpp-enhanced-highlight'
+
+[[plugins]]
+repo = 'vim-python/python-syntax'
+
+[[plugins]]
+repo = 'shougo/neosnippet'
+
+[[plugins]]
+repo = 'shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'rhysd/accelerated-jk'
+
+[[plugins]]
+repo = 'w0rp/ale'
+
+[[plugins]]
+repo = 'chriskempson/vim-tomorrow-theme'
+
+[[plugins]]
+repo = 'bluz71/vim-nightfly-guicolors'
+
+[[plugins]]
+repo = 'guns/xterm-color-table.vim'
+
+[[plugins]]
+repo = 'gorodinskiy/vim-coloresque'
+
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+
+[[plugins]]
+repo = 'justmao945/vim-clang'
+
+[[plugins]]
+repo = 'luochen1990/rainbow'
+
+[[plugins]]
+repo = 'preservim/nerdtree'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+
+[[plugins]]
+repo = 'twitvim/twitvim'
+
+[[plugins]]
+repo = 'reireias/vim-cheatsheet'
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete.vim'
+
+[[plugins]]
+repo = 'simeji/winresizer'
