@@ -1,5 +1,7 @@
 " 行番号の表示
 set number
+set relativenumber
+
 " 現在の列を強調表示
 set cursorline
 " 入力中のコマンドをステータスに表示する
@@ -33,6 +35,8 @@ set shiftwidth=4
 set wildmenu 
 " 保存するコマンド履歴の数
 set history=5000
+"bro olの設定
+set viminfo='20
 
 set clipboard+=unnamed
 set clipboard=unnamed
@@ -42,6 +46,7 @@ noremap : ;
 
 
 inoremap <silent> jj <ESC>
+inoremap <silent> kk <ESC>
 nnoremap <S-h> ^
 nnoremap <S-l> $
 nnoremap <space>n :NERDTree<CR>
@@ -58,10 +63,23 @@ nnoremap <Tab>h <C-w>h
 nnoremap  <space>f  <C-z>
 
 tnoremap <silent>jj <C-\><C-n>
+
+let mapleader = "\<space>"
+nnoremap <leader>fr :FlutterRun<cr>
+nnoremap <leader>fq :FlutterQuit<cr>
+nnoremap <leader>fhr :FlutterHotReload<cr>
+nnoremap <leader>frs :FlutterHotRestart<cr>
+
+nnoremap <leader>s :Semicolon<cr>
+
 for i in range(1, 9)
     execute 'nnoremap <Tab>' . i . ' ' . i . 'gt'
 endfor
 
+"asyncompleteのポップアップにTABを使う
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
 "========================================="
 " plugin Manager: dein.vim setting
 "========================================="
@@ -233,4 +251,38 @@ let g:OmniSharp_server_type = 'roslyn'
 let g:OmniSharp_server_path = '/Users/yo/.cache/omnisharp-mono/OmniSharp.exe'
 let g:OmniSharp_server_use_mono = 1
 
+
+"SourceKit-LSP configuration
+if executable('sourcekit-lsp')
+    au User lsp_setup call lsp#register_server({
+        \'name':'sourcekit-lsp',
+        \'cmd':{server_info->['sourcekit-lsp']},
+        \'whitelist':['swift']
+        \})
+endif
+
+augroup filetype
+  au! BufRead,BufNewFile *.swift set ft=swift
+augroup END
+
+autocmd FileType swift setlocal omnifunc=lsp#complete
+
+"swift.vim
+let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
+
+"vim-jsx-pretty jsのシンタックスハイライト
+let g:vim_jsx_pretty_disable_js = 1
+let g:vim_jsx_pretty_disable_tsx = 1
+let g:vim_jsx_pretty_template_tags = ['html', 'jsx']
+let g:vim_jsx_pretty_highlight_close_tag = 1
+let g:vim_jsx_pretty_colorful_config = 1
+
+"vim-lsp エラーポップアップを消す
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+
 let g:asyncomplete_auto_popup =1
+let g:asyncomplete_popup_delay = 200
+
+"dart-vim-plugin
+let g:dart_style_guide = 4
