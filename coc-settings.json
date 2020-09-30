@@ -1,0 +1,10 @@
+{
+    "languageserver": {
+        "python": {
+            "command": "python",
+            "filetypes": [
+                "python"
+            ]
+        }
+    }
+}

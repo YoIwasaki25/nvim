@@ -17,9 +17,6 @@ repo = 'shougo/neosnippet-snippets'
 repo = 'rhysd/accelerated-jk'
 
 [[plugins]]
-repo = 'w0rp/ale'
-
-[[plugins]]
 repo = 'chriskempson/vim-tomorrow-theme'
 
 [[plugins]]
@@ -65,31 +62,10 @@ repo = 'twitvim/twitvim'
 repo = 'reireias/vim-cheatsheet'
 
 [[plugins]]
-repo = 'mattn/vim-lsp-settings'
-
-[[plugins]]
-repo = 'prabirshrestha/vim-lsp'
-
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete.vim'
-
-[[plugins]]
 repo = 'simeji/winresizer'
 
 [[plugins]]
-repo = 'ryanolsonx/vim-lsp-swift'
-
-[[plugins]]
 repo = 'prabirshrestha/async.vim'
-
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete-lsp.vim'
-
-[[plugins]]
-repo = 'ryanolsonx/vim-lsp-swift'
-
-[[plugins]]
-repo = 'bumaociyuan/vim-swift'
 
 [[plugins]]
 repo = 'tpope/vim-surround'
@@ -119,3 +95,10 @@ repo = 'thosakwe/vim-flutter'
 
 [[plugins]]
 repo = 'easymotion/vim-easymotion'
+
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+on_i = 1
+merged = '0'
+hook_source = 'call coil398#init#coc#hook_source()'

@@ -1,13 +1,13 @@
 " 行番号の表示
 set number
 set relativenumber
-
 " 現在の列を強調表示
 set cursorline
 " 入力中のコマンドをステータスに表示する
 set showcmd
 " 行末の一文字先までカーソルを移動できるように
 set virtualedit=onemore
+
 " シンタクスハイライトの有効化
 syntax enable
 
@@ -15,9 +15,7 @@ syntax enable
 set incsearch
 " 検索パターンに大文字小文字を区別しない
 set ignorecase
-" 検索パターンに大文字を含んでいたら大文字小文字を区別する
-set smartcase
-" 検索結果をハイライト
+" 検索パターンに大文字を含んでいたら大文字小文字を区別する set smartcase 検索結果をハイライト
 set hlsearch
 " タブ入力を複数の空白入力に置き換える
 set expandtab
@@ -40,6 +38,8 @@ set viminfo='20
 
 set clipboard+=unnamed
 set clipboard=unnamed
+
+set statusline^=%{coc#status()}
 
 noremap ; :
 noremap : ;
@@ -69,6 +69,8 @@ nnoremap <leader>fr :FlutterRun<cr>
 nnoremap <leader>fq :FlutterQuit<cr>
 nnoremap <leader>fhr :FlutterHotReload<cr>
 nnoremap <leader>frs :FlutterHotRestart<cr>
+" python Fixの実行
+nnoremap <leader>fi :ALEFix<cr>
 
 nnoremap <leader>s :Semicolon<cr>
 
@@ -80,6 +82,25 @@ endfor
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
+
+"ノーマルモードで
+"スペース2回でCocList
+nnoremap  <leader>coc :CocList<cr>
+nnoremap  <leader>cod :CocDiagnostic<cr>
+"スペースhでHover
+nnoremap  <leader>ho :call CocAction('doHover')<cr>
+
+"スペースdfでDefinition
+nnoremap  <leader>df <Plug>(coc-definition)
+"スペースrfでReferences
+nnoremap  <leader>rf <Plug>(coc-references)
+"スペースrnでRename
+nnoremap  <leader>rn :call CocAction('rename')<cr>
+"スペースfmtでFormat
+nnoremap  <leader>fmt :call CocAction('format')<cr>
+"エラーへジャンプ
+nnoremap  <leader>] :call CocAction('diagnosticNext')<cr>
+nnoremap  <leader>[ :call CocAction('diagnosticPrevious')<cr>
 "========================================="
 " plugin Manager: dein.vim setting
 "========================================="
@@ -116,7 +137,7 @@ if dein#check_install()
   call dein#install()
 endif
 
-"========================================="
+"=======================================
 " setting
 "=======================================
 
@@ -134,11 +155,21 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
+" let g:airline#extensions#coc#enabled = 1
+" let g:airline#extensions#coc#error_symbol = 'Error'
+" let g:airline#extensions#coc#warning_symbol = 'Warning'
+" let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
+" let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+
+
 let g:airline_theme = 'nightfly'
 let g:airline_solarized_bg='dark'
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
+
+let g:airline#extensions#ale#enabled = 1
+let g:ale_disable_lsp = 0
 
 " unicode symbols
 let g:airline_left_sep = '»'
@@ -243,29 +274,10 @@ let twitvim_browser_cmd = 'open' " for Mac
 let twitvim_force_ssl = 1
 let twitvim_count = 40
 
-"Omnisharp用にpython
-let g:python3_host_prog = '/Users/yo/opt/anaconda3/bin/python3'
-let g:python_host_prog = '/usr/local/bin/python2'
+" pyenvを用いたpythonのパス指定
+let g:python_host_prog = $PYENV_ROOT.'/versions/neovim2/bin/python'
+let g:python3_host_prog = $PYENV_ROOT.'/versions/neovim3/bin/python'
 
-let g:OmniSharp_server_type = 'roslyn'
-let g:OmniSharp_server_path = '/Users/yo/.cache/omnisharp-mono/OmniSharp.exe'
-let g:OmniSharp_server_use_mono = 1
-
-
-"SourceKit-LSP configuration
-if executable('sourcekit-lsp')
-    au User lsp_setup call lsp#register_server({
-        \'name':'sourcekit-lsp',
-        \'cmd':{server_info->['sourcekit-lsp']},
-        \'whitelist':['swift']
-        \})
-endif
-
-augroup filetype
-  au! BufRead,BufNewFile *.swift set ft=swift
-augroup END
-
-autocmd FileType swift setlocal omnifunc=lsp#complete
 
 "swift.vim
 let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
@@ -277,12 +289,26 @@ let g:vim_jsx_pretty_template_tags = ['html', 'jsx']
 let g:vim_jsx_pretty_highlight_close_tag = 1
 let g:vim_jsx_pretty_colorful_config = 1
 
-"vim-lsp エラーポップアップを消す
-let g:lsp_diagnostics_enabled = 1
-let g:lsp_diagnostics_echo_cursor = 1
-
-let g:asyncomplete_auto_popup =1
-let g:asyncomplete_popup_delay = 200
-
 "dart-vim-plugin
 let g:dart_style_guide = 4
+" ;Cheatでvimのチートシートを見ることができる
+let g:cheatsheet#cheat_file ='/Users/yo/memo/vim.md'
+
+function! StatusDiagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+  return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
+endfunction
+
+let g:airline#extensions#coc#enabled = 1
+let airline#extensions#coc#error_symbol = 'E:'
+let airline#extensions#coc#warning_symbol = 'W:'
+let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
+let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
