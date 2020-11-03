@@ -1,3 +1,4 @@
+" Vim基本設定 {{{
 " 行番号の表示
 set number
 set relativenumber
@@ -17,9 +18,7 @@ set incsearch
 set ignorecase
 " 検索パターンに大文字を含んでいたら大文字小文字を区別する set smartcase 検索結果をハイライト
 set hlsearch
-" タブ入力を複数の空白入力に置き換える
-set expandtab
-" 画面上でタブ文字が占める幅
+" タブ入力を複数の空白入力に置き換える set expandtab 画面上でタブ文字が占める幅
 set tabstop=4
 " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
 set softtabstop=4
@@ -35,15 +34,20 @@ set wildmenu
 set history=5000
 "bro olの設定
 set viminfo='20
+" 補完時の挙動
+set completeopt=menuone,noinsert
 
-set clipboard+=unnamed
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 set statusline^=%{coc#status()}
 
+au Filetype vim setlocal foldmethod=marker
+au Filetype text setlocal foldmethod=marker
+" }}}
+
+" Keybind 変更 {{{
 noremap ; :
 noremap : ;
-
 
 inoremap <silent> jj <ESC>
 inoremap <silent> kk <ESC>
@@ -64,6 +68,7 @@ nnoremap  <space>f  <C-z>
 
 tnoremap <silent>jj <C-\><C-n>
 
+
 let mapleader = "\<space>"
 nnoremap <leader>fr :FlutterRun<cr>
 nnoremap <leader>fq :FlutterQuit<cr>
@@ -79,17 +84,18 @@ for i in range(1, 9)
 endfor
 
 "asyncompleteのポップアップにTABを使う
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr><C-n> pumvisible() ? "\<Down>" : "\<C-n>"
+inoremap <expr><C-p> pumvisible() ? "\<Up>" : "\<C-p>"
+inoremap <expr><Tab> pumvisible() ? "\<Down>" : "\<Tab>"
+inoremap <expr><S-Tab> pumvisible() ? "\<Up>" : "\<S-Tab>"
 inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
-
-"ノーマルモードで
+" suggest
+inoremap <silent><expr> ;;  coc#refresh()
 "スペース2回でCocList
 nnoremap  <leader>coc :CocList<cr>
 nnoremap  <leader>cod :CocDiagnostic<cr>
 "スペースhでHover
 nnoremap  <leader>ho :call CocAction('doHover')<cr>
-
 "スペースdfでDefinition
 nnoremap  <leader>df <Plug>(coc-definition)
 "スペースrfでReferences
@@ -101,30 +107,31 @@ nnoremap  <leader>fmt :call CocAction('format')<cr>
 "エラーへジャンプ
 nnoremap  <leader>] :call CocAction('diagnosticNext')<cr>
 nnoremap  <leader>[ :call CocAction('diagnosticPrevious')<cr>
-"========================================="
-" plugin Manager: dein.vim setting
-"========================================="
+"}}}
+
+"dein setting{{{
+
 if &compatible
-  set nocompatible               " Be iMproved
+	set nocompatible			   " Be iMproved
 endif
 
 " Required:
-set runtimepath+=/Users/yo/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=/home/yoiwasaki/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/Users/yo/.cache/dein')
-  call dein#begin('/Users/yo/.cache/dein')
+if dein#load_state('/home/yoiwasaki/.cache/dein')
+	call dein#begin('/home/yoiwasaki/.cache/dein')
 
-  " Let dein manage dein
-  " Required:
-  call dein#add('/Users/yo/.cache/dein/repos/github.com/Shougo/dein.vim')
+	" Let dein manage dein
+	" Required:
+	call dein#add('/home/yoiwasaki/.cache/dein/repos/github.com/Shougo/dein.vim')
 
-  " Add or remove your plugins here like this:
-  let s:toml_dir = expand('/Users/yo/.config/nvim/rc/')  
-  call dein#load_toml(s:toml_dir . '/dein.toml',{'lazy':0})
-  call dein#load_toml(s:toml_dir . '/dein_lazy.toml',{'lazy':1})
-  call dein#end()
-  call dein#save_state()
+	" Add or remove your plugins here like this:
+	let s:toml_dir = expand('/home/yoiwasaki/.config/nvim/rc/')  
+	call dein#load_toml(s:toml_dir . '/dein.toml',{'lazy':0})
+	call dein#load_toml(s:toml_dir . '/dein_lazy.toml',{'lazy':1})
+	call dein#end()
+	call dein#save_state()
 endif
 
 " Required:
@@ -134,20 +141,24 @@ syntax enable
 
 " If you want to install not installed plugins on startup.
 if dein#check_install()
-  call dein#install()
+	call dein#install()
 endif
+"}}}
 
-"=======================================
-" setting
-"=======================================
-
-let g:solarized_termcolors=256
-let g:solarized_temtrans = 1
+"plugins setting {{{
+" +color scheme {{{
 colorscheme iceberg
 set background=dark
 set termguicolors
 
-" vim-air-line設定
+highlight Normal ctermbg=NONE guibg=NONE
+highlight NonText ctermbg=NONE guibg=NONE
+highlight LineNr ctermbg=NONE guibg=NONE
+highlight Folded ctermbg=NONE guibg=NONE
+highlight EndOfBuffer ctermbg=NONE guibg=NONE
+
+" +}}}
+" +vim-air-line {{{
 " Powerline系フォントを利用する
 set laststatus=2
 
@@ -200,7 +211,112 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
-"シンタックスのグループ名を知る関数------------------------------
+"+}}}
+" +vim-lang設定 {{{
+let g:clang_c_options = '-std=c11'
+let g:clang_cpp_options = '-std=c++1z -stdlib=libc++ -pedantic-errors'
+""let g:clang_format_auto = 1
+let g:clang_format_style = 'Google'
+let g:clang_check_syntax_auto = 1
+" +}}}
+" +rainbow {{{
+let g:rainbow_active = 1
+" +}}}
+" +vim-indent-guides {{{
+" Vim 起動時 vim-indent-guides を自動起動
+let g:indent_guides_enable_on_vim_startup=0
+" ガイドをスタートするインデントの量
+let g:indent_guides_start_level=1
+" 自動カラー無効
+let g:indent_guides_auto_colors=0
+" 奇数番目のインデントの色
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#efed9a ctermfg = 228
+" 偶数番目のインデントの色
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#000000 ctermbg = 1
+hi IndentGuidesOdd  guibg=red   ctermbg=9
+hi IndentGuidesEven guibg=green ctermbg=23
+"ガイドの幅 
+let g:indent_guides_guide_size = 1
+" +}}}
+" +mycmd {{{
+" 文末にセミコロンをつける自作プラグイン
+":source ~/.vim/mycmd/semicolon.vim
+" +}}}
+" +Twitvim {{{
+let twitvim_browser_cmd = 'open' " for Mac
+let twitvim_force_ssl = 1
+let twitvim_count = 40
+"+ }}}
+" +dart-vim-plugin {{{
+let g:dart_style_guide = 4
+" +}}}
+" +coc.nvim {{{
+function! StatusDiagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+  return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
+endfunction
+
+let g:airline#extensions#coc#enabled = 1
+let airline#extensions#coc#error_symbol = 'E:'
+let airline#extensions#coc#warning_symbol = 'W:'
+let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
+let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+" +}}}
+" +denite.nvim{{{
+let s:denite_win_width_percent = 0.85
+let s:denite_win_height_percent = 0.7
+
+" Change denite default options
+call denite#custom#option('default', {
+    \ 'split': 'floating',
+    \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+    \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+    \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+    \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+	\})
+set pumblend=50 " 0 〜 100 が指定できます。ドキュメントによると 5 〜 30 くらいが適当だそうです。
+autocmd FileType denite set winblend=50
+autocmd FileType denite-filter set winblend=50
+
+nnoremap [denite] <Nop>
+nmap <C-d> [denite]
+nnoremap <silent> [denite]g :<C-u>Denite grep -buffer-name=search-buffer-denite<CR>
+nnoremap <silent> [denite]r :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
+nnoremap <silent> [denite]f :<C-u>Denite file/rec<CR>
+nnoremap <silent> [denite]b :<C-u>Denite file/old<CR>
+" Define mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+endfunction
+
+autocmd FileType denite-filter call s:denite_filter_my_settings()
+function! s:denite_filter_my_settings() abort
+  imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
+endfunction
+"}}}
+" +other setting {{{
+
+"シンタックスのグループ名を知る関数
 function! s:get_syn_id(transparent)
   let synid = synID(line("."), col("."), 1)
   if a:transparent
@@ -236,79 +352,12 @@ function! s:get_syn_info()
         \ " guibg: " . linkedSyn.guibg
 endfunction
 command! SyntaxInfo call s:get_syn_info()
-" ------------------------------------------------------
-
-
-" vim-lang設定---------------------------------------------------------
-let g:clang_c_options = '-std=c11'
-let g:clang_cpp_options = '-std=c++1z -stdlib=libc++ -pedantic-errors'
-""let g:clang_format_auto = 1
-let g:clang_format_style = 'Google'
-let g:clang_check_syntax_auto = 1
-"-----------------------------------------------------------------------
-
-" rainbow
-let g:rainbow_active = 1
-
-" vim-indent-guides
-" Vim 起動時 vim-indent-guides を自動起動
-let g:indent_guides_enable_on_vim_startup=0
-" ガイドをスタートするインデントの量
-let g:indent_guides_start_level=1
-" 自動カラー無効
-let g:indent_guides_auto_colors=0
-" 奇数番目のインデントの色
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#efed9a ctermfg = 228
-" 偶数番目のインデントの色
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#000000 ctermbg = 1
-hi IndentGuidesOdd  guibg=red   ctermbg=9
-hi IndentGuidesEven guibg=green ctermbg=23
-"ガイドの幅 
-let g:indent_guides_guide_size = 1
-
-" 文末にセミコロンをつける自作プラグイン
-:source ~/.vim/mycmd/semicolon.vim
-
-" Twitvim
-let twitvim_browser_cmd = 'open' " for Mac
-let twitvim_force_ssl = 1
-let twitvim_count = 40
 
 " pyenvを用いたpythonのパス指定
 let g:python_host_prog = $PYENV_ROOT.'/versions/neovim2/bin/python'
 let g:python3_host_prog = $PYENV_ROOT.'/versions/neovim3/bin/python'
 
-
-"swift.vim
-let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
-
-"vim-jsx-pretty jsのシンタックスハイライト
-let g:vim_jsx_pretty_disable_js = 1
-let g:vim_jsx_pretty_disable_tsx = 1
-let g:vim_jsx_pretty_template_tags = ['html', 'jsx']
-let g:vim_jsx_pretty_highlight_close_tag = 1
-let g:vim_jsx_pretty_colorful_config = 1
-
-"dart-vim-plugin
-let g:dart_style_guide = 4
 " ;Cheatでvimのチートシートを見ることができる
-let g:cheatsheet#cheat_file ='/Users/yo/memo/vim.md'
-
-function! StatusDiagnostic() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-  if empty(info) | return '' | endif
-  let msgs = []
-  if get(info, 'error', 0)
-    call add(msgs, 'E' . info['error'])
-  endif
-  if get(info, 'warning', 0)
-    call add(msgs, 'W' . info['warning'])
-  endif
-  return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
-endfunction
-
-let g:airline#extensions#coc#enabled = 1
-let airline#extensions#coc#error_symbol = 'E:'
-let airline#extensions#coc#warning_symbol = 'W:'
-let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
-let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+let g:cheatsheet#cheat_file ='/home/yoiwasaki/memo/vim.txt'
+" +}}}
+"}}}

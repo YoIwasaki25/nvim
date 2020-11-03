@@ -1,10 +1,4 @@
 {
-    "languageserver": {
-        "python": {
-            "command": "python",
-            "filetypes": [
-                "python"
-            ]
-        }
-    }
+	"python.jediEnabled": false,
+	"suggest.keepCompleteopt": true
 }

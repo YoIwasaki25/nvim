@@ -102,3 +102,15 @@ rev = 'release'
 on_i = 1
 merged = '0'
 hook_source = 'call coil398#init#coc#hook_source()'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+
+[[plugins]]
+repo = 'junegunn/goyo.vim'
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
