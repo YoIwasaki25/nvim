@@ -43,6 +43,9 @@ set statusline^=%{coc#status()}
 
 au Filetype vim setlocal foldmethod=marker
 au Filetype text setlocal foldmethod=marker
+
+" set syntax=markdown
+" au BufRead,BufNewFile *.md set filetype=markdown
 " }}}
 
 " Keybind 変更 {{{
@@ -50,7 +53,6 @@ noremap ; :
 noremap : ;
 
 inoremap <silent> jj <ESC>
-inoremap <silent> kk <ESC>
 nnoremap <S-h> ^
 nnoremap <S-l> $
 nnoremap <space>n :NERDTree<CR>
@@ -107,6 +109,16 @@ nnoremap  <leader>fmt :call CocAction('format')<cr>
 "エラーへジャンプ
 nnoremap  <leader>] :call CocAction('diagnosticNext')<cr>
 nnoremap  <leader>[ :call CocAction('diagnosticPrevious')<cr>
+
+" ESCしたときに、自動でIMEをOFFにする
+function! ImInActivate()
+  call system('fcitx-remote -c')
+endfunction
+inoremap <silent> <C-[> <ESC>:call ImInActivate()<CR>
+
+nnoremap <leader>mp :MarkdownPreview <CR>
+nnoremap <leader>mps :MarkdownPreviewStop <CR>
+nnoremap <leader>mpt :MarkdownPreviewToggle <CR>
 "}}}
 
 "dein setting{{{
@@ -161,7 +173,6 @@ highlight EndOfBuffer ctermbg=NONE guibg=NONE
 " +vim-air-line {{{
 " Powerline系フォントを利用する
 set laststatus=2
-
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -171,7 +182,6 @@ let g:airline#extensions#whitespace#mixed_indent_algo = 1
 " let g:airline#extensions#coc#warning_symbol = 'Warning'
 " let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
 " let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
-
 
 let g:airline_theme = 'nightfly'
 let g:airline_solarized_bg='dark'
@@ -314,6 +324,13 @@ function! s:denite_filter_my_settings() abort
   imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
 endfunction
 "}}}
+" +markdown-preview.nvim{{{
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
+let g:mkdp_refresh_slow = 0
+let g:mkdp_command_for_global = 0
+let g:mkdp_browser = ''
+"+}}}
 " +other setting {{{
 
 "シンタックスのグループ名を知る関数
@@ -358,6 +375,7 @@ let g:python_host_prog = $PYENV_ROOT.'/versions/neovim2/bin/python'
 let g:python3_host_prog = $PYENV_ROOT.'/versions/neovim3/bin/python'
 
 " ;Cheatでvimのチートシートを見ることができる
-let g:cheatsheet#cheat_file ='/home/yoiwasaki/memo/vim.txt'
+let g:cheatsheet#cheat_file ='/home/yoiwasaki/memo/vim.md'
+
 " +}}}
 "}}}
