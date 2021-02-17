@@ -72,14 +72,14 @@ tnoremap <silent>jj <C-\><C-n>
 
 
 let mapleader = "\<space>"
-nnoremap <leader>fr :FlutterRun<cr>
-nnoremap <leader>fq :FlutterQuit<cr>
-nnoremap <leader>fhr :FlutterHotReload<cr>
-nnoremap <leader>frs :FlutterHotRestart<cr>
-" python Fixの実行
-nnoremap <leader>fi :ALEFix<cr>
+" nnoremap <leader>fr :FlutterRun<cr>
+" nnoremap <leader>fq :FlutterQuit<cr>
+" nnoremap <leader>fhr :FlutterHotReload<cr>
+" nnoremap <leader>frs :FlutterHotRestart<cr>
+" " python Fixの実行
+" nnoremap <leader>fi :ALEFix<cr>
 
-nnoremap <leader>s :Semicolon<cr>
+" nnoremap <leader>s :Semicolon<cr>
 
 for i in range(1, 9)
     execute 'nnoremap <Tab>' . i . ' ' . i . 'gt'
@@ -128,18 +128,18 @@ if &compatible
 endif
 
 " Required:
-set runtimepath+=/home/yoiwasaki/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=/Users/typezeroshare/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/home/yoiwasaki/.cache/dein')
-	call dein#begin('/home/yoiwasaki/.cache/dein')
+if dein#load_state('/Users/typezeroshare/.cache/dein')
+	call dein#begin('/Users/typezeroshare/.cache/dein')
 
 	" Let dein manage dein
 	" Required:
-	call dein#add('/home/yoiwasaki/.cache/dein/repos/github.com/Shougo/dein.vim')
+	call dein#add('/Users/typezeroshare/.cache/dein/repos/github.com/Shougo/dein.vim')
 
 	" Add or remove your plugins here like this:
-	let s:toml_dir = expand('/home/yoiwasaki/.config/nvim/rc/')  
+	let s:toml_dir = expand('/Users/typezeroshare/.config/nvim/rc/')  
 	call dein#load_toml(s:toml_dir . '/dein.toml',{'lazy':0})
 	call dein#load_toml(s:toml_dir . '/dein_lazy.toml',{'lazy':1})
 	call dein#end()
@@ -284,6 +284,8 @@ let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
 let s:denite_win_width_percent = 0.85
 let s:denite_win_height_percent = 0.7
 
+let g:unite_source_file_mru_limit = 30
+
 " Change denite default options
 call denite#custom#option('default', {
     \ 'split': 'floating',
@@ -297,7 +299,7 @@ autocmd FileType denite set winblend=50
 autocmd FileType denite-filter set winblend=50
 
 nnoremap [denite] <Nop>
-nmap <C-d> [denite]
+nmap <leader>d [denite]
 nnoremap <silent> [denite]g :<C-u>Denite grep -buffer-name=search-buffer-denite<CR>
 nnoremap <silent> [denite]r :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
 nnoremap <silent> [denite]f :<C-u>Denite file/rec<CR>
@@ -371,11 +373,35 @@ endfunction
 command! SyntaxInfo call s:get_syn_info()
 
 " pyenvを用いたpythonのパス指定
-let g:python_host_prog = $PYENV_ROOT.'/versions/neovim2/bin/python'
-let g:python3_host_prog = $PYENV_ROOT.'/versions/neovim3/bin/python'
+" let g:python_host_prog = $HOME/.anyenv/envs/pyenv/versions/neovim3/bin/python
+let g:python3_host_prog = "$HOME/.anyenv/envs/pyenv/versions/neovim3/bin/python"
 
 " ;Cheatでvimのチートシートを見ることができる
-let g:cheatsheet#cheat_file ='/home/yoiwasaki/memo/vim.md'
+let g:cheatsheet#cheat_file ='/Users/typezeroshare/memo/vim.md'
 
 " +}}}
+" +calendar.vim {{{
+"
+" API認証情報の格納パス $HOME/.cache/calendar.vim/credentials.vim
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
+source $HOME/.cache/calendar.vim/credentials.vim
+
+" }}}
+" +nvim-treesitter {{{
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+highlight = {
+enable = true,
+disable = {
+'lua',
+'ruby',
+'c_charp',
+'vue'
+}
+},
+ensure_installed = 'maintained',
+}
+EOF
+" }}}
 "}}}

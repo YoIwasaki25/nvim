@@ -118,3 +118,12 @@ repo = 'Shougo/neomru.vim'
 [[plugins]]
 repo = 'plasticboy/vim-markdown'
 
+[[plugins]]
+repo = 'itchyny/calendar.vim'
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+merged = '0'
+
+[[plugins]]
+repo = 'tyru/eskk.vim'
