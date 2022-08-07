@@ -1,26 +1,8 @@
 [[plugins]]
-repo = 'altercation/vim-colors-solarized'
-
-[[plugins]]
-repo = 'octol/vim-cpp-enhanced-highlight'
-
-[[plugins]]
-repo = 'vim-python/python-syntax'
-
-[[plugins]]
 repo = 'shougo/neosnippet'
 
 [[plugins]]
 repo = 'shougo/neosnippet-snippets'
-
-[[plugins]]
-repo = 'rhysd/accelerated-jk'
-
-[[plugins]]
-repo = 'chriskempson/vim-tomorrow-theme'
-
-[[plugins]]
-repo = 'bluz71/vim-nightfly-guicolors'
 
 [[plugins]]
 repo = 'guns/xterm-color-table.vim'
@@ -30,9 +12,6 @@ repo = 'gorodinskiy/vim-coloresque'
 
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
-
-[[plugins]]
-repo = 'justmao945/vim-clang'
 
 [[plugins]]
 repo = 'luochen1990/rainbow'
@@ -47,19 +26,7 @@ repo = 'vim-airline/vim-airline-themes'
 repo = 'vim-airline/vim-airline'
 
 [[plugins]]
-repo = 'Yggdroot/indentLine'
-
-[[plugins]]
 repo = 'jiangmiao/auto-pairs'
-
-[[plugins]]
-repo = 'nathanaelkane/vim-indent-guides'
-
-[[plugins]]
-repo = 'twitvim/twitvim'
-
-[[plugins]]
-repo = 'reireias/vim-cheatsheet'
 
 [[plugins]]
 repo = 'simeji/winresizer'
@@ -80,17 +47,6 @@ repo ='tpope/vim-commentary'
 repo = 'yuezk/vim-js'
 
 [[plugins]]
-repo = 'maxmellon/vim-jsx-pretty'
-on_ft = ['javascript', 'javascript.jsx']
-
-[[plugins]]
-repo = 'ternjs/tern_for_vim'
-on_ft = ['javascript', 'javascript.jsx']
-
-[[plugins]]
-repo = 'dart-lang/dart-vim-plugin'
-
-[[plugins]]
 repo = 'thosakwe/vim-flutter'
 
 [[plugins]]
@@ -104,9 +60,6 @@ merged = '0'
 hook_source = 'call coil398#init#coc#hook_source()'
 
 [[plugins]]
-repo = 'Shougo/denite.nvim'
-
-[[plugins]]
 repo = 'junegunn/goyo.vim'
 
 [[plugins]]
@@ -116,14 +69,39 @@ repo = 'Shougo/neoyank.vim'
 repo = 'Shougo/neomru.vim'
 
 [[plugins]]
-repo = 'plasticboy/vim-markdown'
+repo = 'rust-lang/rust.vim'
 
 [[plugins]]
-repo = 'itchyny/calendar.vim'
+repo = 'tomlion/vim-solidity'
+
+[[plugins]]
+repo = 'sophacles/vim-processing'
+
+[[plugins]]
+repo = 'turbio/bracey.vim'
+
+[[pluugins]]
+repo = 'sheerun/vim-polyglot'
+merged = '0'
+
+[[plugins]]
+repo = 'overcache/NeoSolarized'
+
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+
+[[plugins]]
+repo = 'peitalin/vim-jsx-typescript'
+
+[[plugins]]
+repo = 'pantharshit00/vim-prisma'
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 merged = '0'
 
 [[plugins]]
-repo = 'tyru/eskk.vim'
+repo = 'lukas-reineke/indent-blankline.nvim'
+
+[[plugins]]
+repo = 'EdenEast/nightfox.nvim'

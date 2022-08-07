@@ -9,9 +9,6 @@ set showcmd
 " 行末の一文字先までカーソルを移動できるように
 set virtualedit=onemore
 
-" シンタクスハイライトの有効化
-syntax enable
-
 " インクリメンタルサーチ.　1文字入力ごとに検索を行う
 set incsearch
 " 検索パターンに大文字小文字を区別しない
@@ -19,15 +16,15 @@ set ignorecase
 " 検索パターンに大文字を含んでいたら大文字小文字を区別する set smartcase 検索結果をハイライト
 set hlsearch
 " タブ入力を複数の空白入力に置き換える set expandtab 画面上でタブ文字が占める幅
-set tabstop=4
+set tabstop=2
 " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
-set softtabstop=4
+set softtabstop=2
 " 開業時に前の行のインデントを継続する
 set autoindent
 " 改行時に前の行の構文をチェックし次の行のインデントを増減する
 set smartindent
 " smartindent で増減する幅
-set shiftwidth=4
+set shiftwidth=2
 " コマンドモードの補完
 set wildmenu 
 " 保存するコマンド履歴の数
@@ -44,9 +41,12 @@ set statusline^=%{coc#status()}
 au Filetype vim setlocal foldmethod=marker
 au Filetype text setlocal foldmethod=marker
 
-" set syntax=markdown
-" au BufRead,BufNewFile *.md set filetype=markdown
-" }}}
+set ttyfast
+set lazyredraw
+
+source $VIMRUNTIME/macros/matchit.vim
+
+"}}}
 
 " Keybind 変更 {{{
 noremap ; :
@@ -67,19 +67,13 @@ nnoremap <Tab>k <C-w>k
 nnoremap <Tab>j <C-w>j
 nnoremap <Tab>h <C-w>h
 nnoremap  <space>f  <C-z>
+nnoremap <S-u> <C-u>
+nnoremap <S-d> <C-d>
 
 tnoremap <silent>jj <C-\><C-n>
 
 
 let mapleader = "\<space>"
-" nnoremap <leader>fr :FlutterRun<cr>
-" nnoremap <leader>fq :FlutterQuit<cr>
-" nnoremap <leader>fhr :FlutterHotReload<cr>
-" nnoremap <leader>frs :FlutterHotRestart<cr>
-" " python Fixの実行
-" nnoremap <leader>fi :ALEFix<cr>
-
-" nnoremap <leader>s :Semicolon<cr>
 
 for i in range(1, 9)
     execute 'nnoremap <Tab>' . i . ' ' . i . 'gt'
@@ -91,6 +85,7 @@ inoremap <expr><C-p> pumvisible() ? "\<Up>" : "\<C-p>"
 inoremap <expr><Tab> pumvisible() ? "\<Down>" : "\<Tab>"
 inoremap <expr><S-Tab> pumvisible() ? "\<Up>" : "\<S-Tab>"
 inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
+
 " suggest
 inoremap <silent><expr> ;;  coc#refresh()
 "スペース2回でCocList
@@ -122,24 +117,22 @@ nnoremap <leader>mpt :MarkdownPreviewToggle <CR>
 "}}}
 
 "dein setting{{{
-
 if &compatible
 	set nocompatible			   " Be iMproved
 endif
 
 " Required:
-set runtimepath+=/Users/typezeroshare/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=/Users/yoiwasaki/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/Users/typezeroshare/.cache/dein')
-	call dein#begin('/Users/typezeroshare/.cache/dein')
+if dein#load_state('/Users/yoiwasaki/.cache/dein')
+	call dein#begin('/Users/yoiwasaki/.cache/dein')
 
-	" Let dein manage dein
-	" Required:
-	call dein#add('/Users/typezeroshare/.cache/dein/repos/github.com/Shougo/dein.vim')
+	" Let dein manage dein Required:
+	call dein#add('/Users/yoiwasaki/.cache/dein/repos/github.com/Shougo/dein.vim')
 
 	" Add or remove your plugins here like this:
-	let s:toml_dir = expand('/Users/typezeroshare/.config/nvim/rc/')  
+	let s:toml_dir = expand('/Users/yoiwasaki/.config/nvim/rc/')  
 	call dein#load_toml(s:toml_dir . '/dein.toml',{'lazy':0})
 	call dein#load_toml(s:toml_dir . '/dein_lazy.toml',{'lazy':1})
 	call dein#end()
@@ -149,7 +142,6 @@ endif
 " Required:
 filetype plugin indent on
 filetype plugin on
-syntax enable
 
 " If you want to install not installed plugins on startup.
 if dein#check_install()
@@ -158,10 +150,14 @@ endif
 "}}}
 
 "plugins setting {{{
-" +color scheme {{{
-colorscheme iceberg
+"+color scheme {{{
+colorscheme nightfox
 set background=dark
+
+syntax enable
 set termguicolors
+" set background=dark
+" colorscheme NeoSolarized
 
 highlight Normal ctermbg=NONE guibg=NONE
 highlight NonText ctermbg=NONE guibg=NONE
@@ -183,8 +179,8 @@ let g:airline#extensions#whitespace#mixed_indent_algo = 1
 " let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
 " let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
 
-let g:airline_theme = 'nightfly'
-let g:airline_solarized_bg='dark'
+let g:airline_theme = 'iceberg'
+" let g:airline_solarized_bg='dark'
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -222,43 +218,13 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 "+}}}
-" +vim-lang設定 {{{
-let g:clang_c_options = '-std=c11'
-let g:clang_cpp_options = '-std=c++1z -stdlib=libc++ -pedantic-errors'
-""let g:clang_format_auto = 1
-let g:clang_format_style = 'Google'
-let g:clang_check_syntax_auto = 1
-" +}}}
 " +rainbow {{{
+au Filetype ts call rainbow#load()
 let g:rainbow_active = 1
-" +}}}
-" +vim-indent-guides {{{
-" Vim 起動時 vim-indent-guides を自動起動
-let g:indent_guides_enable_on_vim_startup=0
-" ガイドをスタートするインデントの量
-let g:indent_guides_start_level=1
-" 自動カラー無効
-let g:indent_guides_auto_colors=0
-" 奇数番目のインデントの色
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#efed9a ctermfg = 228
-" 偶数番目のインデントの色
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#000000 ctermbg = 1
-hi IndentGuidesOdd  guibg=red   ctermbg=9
-hi IndentGuidesEven guibg=green ctermbg=23
-"ガイドの幅 
-let g:indent_guides_guide_size = 1
 " +}}}
 " +mycmd {{{
 " 文末にセミコロンをつける自作プラグイン
 ":source ~/.vim/mycmd/semicolon.vim
-" +}}}
-" +Twitvim {{{
-let twitvim_browser_cmd = 'open' " for Mac
-let twitvim_force_ssl = 1
-let twitvim_count = 40
-"+ }}}
-" +dart-vim-plugin {{{
-let g:dart_style_guide = 4
 " +}}}
 " +coc.nvim {{{
 function! StatusDiagnostic() abort
@@ -281,58 +247,51 @@ let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
 let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
 " +}}}
 " +denite.nvim{{{
-let s:denite_win_width_percent = 0.85
-let s:denite_win_height_percent = 0.7
+" let s:denite_win_width_percent = 0.85
+" let s:denite_win_height_percent = 0.85
 
-let g:unite_source_file_mru_limit = 30
+" let g:unite_source_file_mru_limit = 30
 
-" Change denite default options
-call denite#custom#option('default', {
-    \ 'split': 'floating',
-    \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
-    \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
-    \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
-    \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
-	\})
-set pumblend=50 " 0 〜 100 が指定できます。ドキュメントによると 5 〜 30 くらいが適当だそうです。
-autocmd FileType denite set winblend=50
-autocmd FileType denite-filter set winblend=50
+" " Change denite default options
+" call denite#custom#option('default', {
+"     \ 'split': 'floating',
+"     \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+"     \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+"     \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+"     \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+" 	\})
+" set pumblend=30 " 0 〜 100 が指定できます。ドキュメントによると 5 〜 30 くらいが適当だそうです。
+" autocmd FileType denite set winblend=50
+" autocmd FileType denite-filter set winblend=50
 
-nnoremap [denite] <Nop>
-nmap <leader>d [denite]
-nnoremap <silent> [denite]g :<C-u>Denite grep -buffer-name=search-buffer-denite<CR>
-nnoremap <silent> [denite]r :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
-nnoremap <silent> [denite]f :<C-u>Denite file/rec<CR>
-nnoremap <silent> [denite]b :<C-u>Denite file/old<CR>
-" Define mappings
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <Space>
-  \ denite#do_map('toggle_select').'j'
-endfunction
+" nnoremap [denite] <Nop>
+" nmap <leader>d [denite]
+" nnoremap <silent> [denite]g :<C-u>Denite grep -buffer-name=search-buffer-denite<CR>
+" nnoremap <silent> [denite]r :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
+" nnoremap <silent> [denite]f :<C-u>Denite file/rec<CR>
+" nnoremap <silent> [denite]b :<C-u>Denite file/old<CR>
+" " Define mappings
+" autocmd FileType denite call s:denite_my_settings()
+" function! s:denite_my_settings() abort
+"   nnoremap <silent><buffer><expr> <CR>
+"   \ denite#do_map('do_action')
+"   nnoremap <silent><buffer><expr> d
+"   \ denite#do_map('do_action', 'delete')
+"   nnoremap <silent><buffer><expr> p
+"   \ denite#do_map('do_action', 'preview')
+"   nnoremap <silent><buffer><expr> q
+"   \ denite#do_map('quit')
+"   nnoremap <silent><buffer><expr> i
+"   \ denite#do_map('open_filter_buffer')
+"   nnoremap <silent><buffer><expr> <Space>
+"   \ denite#do_map('toggle_select').'j'
+" endfunction
 
-autocmd FileType denite-filter call s:denite_filter_my_settings()
-function! s:denite_filter_my_settings() abort
-  imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
-endfunction
+" autocmd FileType denite-filter call s:denite_filter_my_settings()
+" function! s:denite_filter_my_settings() abort
+"   imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
+" endfunction
 "}}}
-" +markdown-preview.nvim{{{
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 1
-let g:mkdp_refresh_slow = 0
-let g:mkdp_command_for_global = 0
-let g:mkdp_browser = ''
-"+}}}
 " +other setting {{{
 
 "シンタックスのグループ名を知る関数
@@ -374,34 +333,47 @@ command! SyntaxInfo call s:get_syn_info()
 
 " pyenvを用いたpythonのパス指定
 " let g:python_host_prog = $HOME/.anyenv/envs/pyenv/versions/neovim3/bin/python
-let g:python3_host_prog = "$HOME/.anyenv/envs/pyenv/versions/neovim3/bin/python"
+let g:python3_host_prog = "/Users/yoiwasaki/.anyenv/envs/pyenv/shims/python"
 
 " ;Cheatでvimのチートシートを見ることができる
-let g:cheatsheet#cheat_file ='/Users/typezeroshare/memo/vim.md'
+let g:cheatsheet#cheat_file ='/Users/yoiwasaki/memo/vim.md'
 
-" +}}}
-" +calendar.vim {{{
-"
-" API認証情報の格納パス $HOME/.cache/calendar.vim/credentials.vim
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
-source $HOME/.cache/calendar.vim/credentials.vim
+autocmd FileType vue syntax sync fromstart
 
-" }}}
+" +bracey.vim{{{
+let g:bracey_browser_command = 'open'
+let g:bracey_server_allow_remote_connections=1                   
+let g:bracey_server_port=8000
+"}}}
 " +nvim-treesitter {{{
+
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-highlight = {
-enable = true,
-disable = {
-'lua',
-'ruby',
-'c_charp',
-'vue'
-}
-},
-ensure_installed = 'maintained',
+  highlight = {
+    enable = true,
+    disable = {
+      'lua',
+      'ruby',
+      'vue',
+    }
+  }
 }
 EOF
+
 " }}}
+"
+""}}}
+" +vim-jsx-typescript{{{
+	autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
+" }}}
+"+ indent-blankline{{{
+lua <<EOF
+vim.opt.list = true
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
+}
+
+EOF
 "}}}
