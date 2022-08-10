@@ -1,0 +1,12 @@
+-- coc.nvim 0.0.82 から、pop up の仕様変更があったみたい。
+-- pumvisible() が利かなくなり、coc#pum#visible() に変更したところ治った
+
+-- vim.api.nvim_set_keymap("i", "<CR>", "coc#pum#visible() ? coc#pum#confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
+-- vim.api.nvim_set_keymap("i", ";;", "coc#refresh()", { silent = true, expr = true })
+-- vim.api.nvim_set_keymap("n", "gd","<Plug>(coc-definition)", {silent = true})
+-- vim.api.nvim_set_keymap("n", "<leader>rn","<Plug>(coc-rename)", {silent = true})
+-- vim.api.nvim_set_keymap("n", "K","<Cmd>call CocActionAsync('doHover')<CR>", {silent = true, noremap = true})
+-- vim.api.nvim_set_keymap("n", "<leader>f","<Cmd>CocCommand prettier.formatFile<CR>", { noremap = true})
+-- vim.api.nvim_set_keymap("n", "<leader>[","<Cmd>call CocAction('diagnosticPrevious')<CR>", { noremap = true})
+-- vim.api.nvim_set_keymap("n", "<leader>]","<Cmd>call CocAction('diagnosticNext')<CR>", { noremap = true})
+-- vim.o.updatetime = 300
