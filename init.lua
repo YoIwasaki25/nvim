@@ -46,6 +46,7 @@ vim.cmd 'autocmd ColorScheme * highlight Folded ctermbg=none guibg=none'
 vim.cmd 'autocmd ColorScheme * highlight EndOfBuffer ctermbg=none guibg=none'
 vim.cmd 'colorscheme nightfox'
 
+
 -- 'keyconfig' ----------------------------------------------------------------------------------------------------------------
 vim.g.mapleader = " "
 vim.api.nvim_set_keymap('n', ';', ':', {noremap = true})

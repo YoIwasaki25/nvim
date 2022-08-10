@@ -10,10 +10,12 @@ require('packer').startup(function()
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
     use 'norcalli/nvim-colorizer.lua'
-    use {
-      'windwp/nvim-autopairs',
-      config = function() require("nvim-autopairs").setup{} end
-    }
+    use 'jiangmiao/auto-pairs'
+    --coc.nvim の <CR>と競合する
+    -- use {
+    --   'windwp/nvim-autopairs',
+    --   config = function() require("nvim-autopairs").setup{} end
+    -- }
     use {
         'nvim-telescope/telescope.nvim', tag='0.1.0',
         requires = { {'nvim-lua/plenary.nvim'} }
