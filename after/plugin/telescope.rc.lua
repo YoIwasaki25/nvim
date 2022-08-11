@@ -1,9 +1,9 @@
 local status, telescope = pcall(require, "telescope")
 if (not status) then return end
 
-local function telescope_buffer_dir()
-  return vim.fn.expand('%:p:h')
-end
+-- local function telescope_buffer_dir()
+--   return vim.fn.expand('%:p:h')
+-- end
 
 local fb_actions = require "telescope".extensions.file_browser.actions
 
@@ -35,7 +35,7 @@ vim.keymap.set("n", "<leader>n", function()
   telescope.extensions.file_browser.file_browser({
     -- path = "%:p:h",
     -- cwd = telescope_buffer_dir(),
-    respect_gitignore = false,
+    respect_gitignore = true,
     hidden = true,
     grouped = true,
     initial_mode = "normal",
