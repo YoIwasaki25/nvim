@@ -13,22 +13,34 @@ telescope.setup {
       n = {
         ["q"] = require('telescope.actions').close
       }
+    },
+    file_ignore_patterns = {
+      "%.git/", "node_modules/.*", ".DS_Store"
+    },
+  },
+  pickers = {
+    find_files = {
+      theme = "dropdown",
     }
   },
   extensions = {
     file_browser = {
       theme = "dropdown",
       hijack_netrw = true,
-      mappings={
+      mappings = {
         ["n"] = {
-          ["/"] = function ()
-           vim.cmd('startinsert') 
+          ["/"] = function()
+            vim.cmd('startinsert')
           end
         }
-      }
+      },
+    },
+    frecency = {
+      ignore_patterns = { "*.git/*", "*/tmp/*", "*.DS_Store*" },
     }
   }
 }
+
 telescope.load_extension("file_browser")
 
 vim.keymap.set("n", "<leader>n", function()
@@ -50,14 +62,14 @@ vim.keymap.set('n', '<leader>f', function()
   })
 end)
 
-vim.keymap.set('n',"<leader>g", function ()
+vim.keymap.set('n', "<leader>g", function()
   require('telescope.builtin').live_grep()
 end)
 
-vim.keymap.set('n',"<leader>b", function ()
+vim.keymap.set('n', "<leader>b", function()
   require('telescope.builtin').buffers()
 end)
 
 -- 'Telescope-frecency.nvim' -----------------------------------------------------------------------------------------------------------
 vim.api.nvim_set_keymap("n", "<leader><leader>", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
-{ noremap = true, silent = true })
+  { noremap = true, silent = true })
