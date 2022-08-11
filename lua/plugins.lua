@@ -25,6 +25,7 @@ require('packer').startup(function()
   use 'tpope/vim-surround'
   use 'tpope/vim-commentary'
   use 'norcalli/nvim-colorizer.lua'
+  use 'akinsho/bufferline.nvim'
 --coc.nvim の <CR>と競合する
   use {
     'windwp/nvim-autopairs',
