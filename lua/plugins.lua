@@ -65,6 +65,7 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
   use 'williamboman/mason.nvim'
   use 'williamboman/mason-lspconfig.nvim'
+  use 'glepnir/lspsaga.nvim'
   
   -- 'Completion'--
   use 'hrsh7th/nvim-cmp'

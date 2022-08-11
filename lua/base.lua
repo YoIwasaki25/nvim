@@ -27,7 +27,8 @@ vim.opt.swapfile = false
 vim.opt.clipboard:append{'unnamedplus'}
 vim.opt.completeopt="menu,menuone,noinsert"
 vim.opt.ttyfast = true
-vim.opt.history = 100 vim.cmd 'autocmd TermOpen * startinsert'
+vim.opt.history = 100
+vim.cmd 'autocmd TermOpen * startinsert'
 vim.cmd [[ 
 if executable('fcitx5')
   let g:fcitx_state = 1

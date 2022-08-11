@@ -1,4 +1,3 @@
-vim.g.mapleader = " "
-vim.api.nvim_set_keymap('n', ';', ':', {noremap = true})
-vim.api.nvim_set_keymap('n', ':', ';', {noremap = true})
-vim.api.nvim_set_keymap('n', '<Tab><Tab>', '<C-w>w', {noremap = true})
+vim.g.mapleader = ";"
+-- vim.api.nvim_set_keymap('n', ';', ':', {noremap = true})
+-- vim.api.nvim_set_keymap('n', ':', ';', {noremap = true})

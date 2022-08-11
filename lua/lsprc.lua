@@ -4,23 +4,22 @@ local on_attach = function(client, bufnr)
   -- client.resolved_capabilities.document_formatting = false
 
   local set = vim.keymap.set
-  set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-  set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-  set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-  set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-  -- set("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
-  set("n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>")
-  set("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
-  set("n", "<leader>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>")
-  set("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-  set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
-  set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-  set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-  set("n", "<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>")
-  set("n", "<leader>[", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
-  set("n", "<leader>]", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
-  set("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>")
-  set("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+  -- -- set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+  -- -- set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+  -- set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+  -- -- set("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
+  -- set("n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>")
+  -- set("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
+  -- set("n", "<leader>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>")
+  -- set("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
+  -- set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
+  -- set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+  -- set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+  -- set("n", "<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>")
+  -- -- set("n", "<leader>[", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
+  -- -- set("n", "<leader>]", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
+  -- set("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>")
+  -- set("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
 end
 
 require("mason").setup()
@@ -29,8 +28,7 @@ require("mason-lspconfig").setup_handlers {
   function(server_name) -- default handler (optional)
     require("lspconfig")[server_name].setup {
       on_attach = on_attach
-    }
-  end,
+    } end,
 }
 
 -- lspconfig[server.name].setupに追加
@@ -55,7 +53,7 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
-    -- { name = "vsnip" },
+    { name = "luasnip" },
   }, {
     { name = "buffer" },
   })

@@ -1,10 +1,63 @@
--- 'Telescope.nvim' -----------------------------------------------------------------------------------------------------------
-vim.api.nvim_set_keymap("n", "<leader>k", "<Cmd>lua require('telescope.builtin').find_files()<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<leader>g", "<Cmd>lua require('telescope.builtin').live_grep()<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<leader>b", "<Cmd>lua require('telescope.builtin').buffers()<CR>", {noremap = true})
+local status, telescope = pcall(require, "telescope")
+if (not status) then return end
+
+local function telescope_buffer_dir()
+  return vim.fn.expand('%:p:h')
+end
+
+local fb_actions = require "telescope".extensions.file_browser.actions
+
+telescope.setup {
+  defaults = {
+    mappings = {
+      n = {
+        ["q"] = require('telescope.actions').close
+      }
+    }
+  },
+  extensions = {
+    file_browser = {
+      theme = "dropdown",
+      hijack_netrw = true,
+      mappings={
+        ["n"] = {
+          ["/"] = function ()
+           vim.cmd('startinsert') 
+          end
+        }
+      }
+    }
+  }
+}
+telescope.load_extension("file_browser")
+
+vim.keymap.set("n", "<leader>n", function()
+  telescope.extensions.file_browser.file_browser({
+    -- path = "%:p:h",
+    -- cwd = telescope_buffer_dir(),
+    respect_gitignore = false,
+    hidden = true,
+    grouped = true,
+    initial_mode = "normal",
+    layout_config = { height = 30 }
+  })
+end)
+
+vim.keymap.set('n', '<leader>f', function()
+  require('telescope.builtin').find_files({
+    no_ignore = false,
+    hidden = true
+  })
+end)
+
+vim.keymap.set('n',"<leader>g", function ()
+  require('telescope.builtin').live_grep()
+end)
+
+vim.keymap.set('n',"<leader>b", function ()
+  require('telescope.builtin').buffers()
+end)
 
 -- 'Telescope-frecency.nvim' -----------------------------------------------------------------------------------------------------------
-vim.api.nvim_set_keymap("n", "<leader>o", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>", {noremap = true, silent = true})
-
--- 'Telescope-file-browser.nvim' -----------------------------------------------------------------------------------------------------------
-vim.api.nvim_set_keymap("n", "<leader>n", "<Cmd>Telescope file_browser<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<leader><leader>", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
+{ noremap = true, silent = true })
