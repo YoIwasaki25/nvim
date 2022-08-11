@@ -30,7 +30,6 @@ require('packer').startup(function()
     'windwp/nvim-autopairs',
     config = function() require("nvim-autopairs").setup{} end
   }
-
   use {
     'nvim-telescope/telescope.nvim', tag='0.1.0',
     requires = { {'nvim-lua/plenary.nvim'} }
@@ -75,6 +74,8 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-cmdline'
   use 'onsails/lspkind-nvim'
   use 'L3MON4D3/LuaSnip'
+
+  use 'lewis6991/gitsigns.nvim'
 end
 )
 
