@@ -18,8 +18,8 @@ local on_attach = function(client, bufnr)
   -- set("n", "<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>")
   -- -- set("n", "<leader>[", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
   -- -- set("n", "<leader>]", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
-  -- set("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>")
-  -- set("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+  set("n", "<leader>d", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>")
+  set("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
 end
 
 require("mason").setup()
@@ -28,7 +28,8 @@ require("mason-lspconfig").setup_handlers {
   function(server_name) -- default handler (optional)
     require("lspconfig")[server_name].setup {
       on_attach = on_attach
-    } end,
+    }
+  end,
 }
 
 -- lspconfig[server.name].setupに追加
