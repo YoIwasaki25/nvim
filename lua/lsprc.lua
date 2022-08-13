@@ -1,25 +1,30 @@
+local status, nvim_lsp = pcall(require, "lspconfig")
+if (not status) then return end
 local on_attach = function(client, bufnr)
-  -- LSPサーバーのフォーマット機能を無効にするには下の行をコメントアウト
-  -- 例えばtypescript-language-serverにはコードのフォーマット機能が付いているが代わりにprettierでフォーマットしたいときなどに使う
-  -- client.resolved_capabilities.document_formatting = false
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
-  local set = vim.keymap.set
-  -- -- set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-  -- -- set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-  -- set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-  -- -- set("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
-  -- set("n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>")
-  -- set("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
-  -- set("n", "<leader>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>")
-  -- set("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-  -- set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
-  -- set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-  -- set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-  -- set("n", "<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>")
-  -- -- set("n", "<leader>[", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
-  -- -- set("n", "<leader>]", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
-  set("n", "<leader>d", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>")
-  set("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  --Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap = true, silent = true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  --buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+
+  -- formatting
+  if client.server_capabilities.documentFormattingProvider then
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = vim.api.nvim_create_augroup("Format", { clear = true }),
+      buffer = bufnr,
+      callback = function() vim.lsp.buf.formatting_seq_sync() end
+    })
+  end
 end
 
 require("mason").setup()
@@ -33,8 +38,6 @@ require("mason-lspconfig").setup_handlers {
 }
 
 -- lspconfig[server.name].setupに追加
-capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
 local cmp = require "cmp"
 cmp.setup({
   snippet = {
@@ -80,4 +83,36 @@ cmp.setup {
       end
     })
   }
+}
+
+-- setup --
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+nvim_lsp.tsserver.setup {
+  on_attach = on_attach,
+  filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+  cmd = { "typescript-language-server", "--stdio" },
+  capabilities = capabilities
+}
+
+nvim_lsp.sumneko_lua.setup {
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' },
+      },
+
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false
+      },
+    },
+  },
+}
+
+nvim_lsp.rust_analyzer.setup {
+  on_attach = on_attach,
 }

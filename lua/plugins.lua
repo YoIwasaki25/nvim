@@ -1,6 +1,7 @@
-local install_path = vim.fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
+local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  packer_bootstrap = vim.fn.system({"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path})
+  packer_bootstrap = vim.fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim",
+    install_path })
 end
 
 vim.cmd [[packadd packer.nvim]]
@@ -15,27 +16,27 @@ require('packer').startup(function(use)
   use 'tpope/vim-commentary'
   use 'norcalli/nvim-colorizer.lua'
   use 'akinsho/bufferline.nvim'
---coc.nvim の <CR>と競合する
+  --coc.nvim の <CR>と競合する
   use {
     'windwp/nvim-autopairs',
-    config = function() require("nvim-autopairs").setup{} end
+    config = function() require("nvim-autopairs").setup {} end
   }
   use 'windwp/nvim-ts-autotag'
   use {
-    'nvim-telescope/telescope.nvim', tag='0.1.0',
-    requires = { {'nvim-lua/plenary.nvim'} }
+    'nvim-telescope/telescope.nvim', tag = '0.1.0',
+    requires = { { 'nvim-lua/plenary.nvim' } }
   }
   use {
     'nvim-telescope/telescope-frecency.nvim',
     config = function()
-      require"telescope".load_extension("frecency")
+      require "telescope".load_extension("frecency")
     end,
-    requires = {"tami5/sqlite.lua"}
+    requires = { "tami5/sqlite.lua" }
   }
   use {
     'nvim-telescope/telescope-file-browser.nvim',
-    config = function ()
-      require"telescope".load_extension("file_browser")
+    config = function()
+      require "telescope".load_extension("file_browser")
     end,
   }
   -- use {
@@ -44,7 +45,7 @@ require('packer').startup(function(use)
   -- }
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt=true }
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -56,7 +57,7 @@ require('packer').startup(function(use)
   use 'williamboman/mason.nvim'
   use 'williamboman/mason-lspconfig.nvim'
   use 'glepnir/lspsaga.nvim'
-  
+
   -- 'Completion'--
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
@@ -67,6 +68,11 @@ require('packer').startup(function(use)
   use 'L3MON4D3/LuaSnip'
 
   use 'lewis6991/gitsigns.nvim'
+  use 'folke/zen-mode.nvim'
+
+  -- 'prettier' --
+  use 'jose-elias-alvarez/null-ls.nvim'
+  use 'MunifTanjim/prettier.nvim'
 
   if packer_bootstrap then
     require("packer").sync()

@@ -30,6 +30,7 @@ vim.opt.ttyfast = true
 vim.opt.history = 100
 vim.cmd 'autocmd TermOpen * startinsert'
 vim.cmd [[ 
+
 if executable('fcitx5')
   let g:fcitx_state = 1
   autogroup fcitx_savestate autocmd!
