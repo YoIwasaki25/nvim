@@ -12,7 +12,7 @@ require('packer').startup(function(use)
   use 'luochen1990/rainbow'
   use 'EdenEast/nightfox.nvim'
   use 'simeji/winresizer'
-  use 'tpope/vim-surround'
+  use 'kylechui/nvim-surround'
   use 'tpope/vim-commentary'
   use 'norcalli/nvim-colorizer.lua'
   use 'akinsho/bufferline.nvim'
