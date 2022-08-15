@@ -21,6 +21,13 @@ telescope.setup {
   pickers = {
     find_files = {
       theme = "dropdown",
+    },
+    buffers = {
+      theme = "dropdown",
+      initial_mode = "normal"
+    },
+    live_grep = {
+      theme = "dropdown",
     }
   },
   extensions = {

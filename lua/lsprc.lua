@@ -47,10 +47,11 @@ cmp.setup({
       require('luasnip').lsp_expand(args.body)
     end,
   },
+
   mapping = cmp.mapping.preset.insert({
     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
     ["<C-d>"] = cmp.mapping.scroll_docs(4),
-    [";;"] = cmp.mapping.complete(),
+    ["<C-;>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
@@ -124,3 +125,9 @@ nvim_lsp.cssls.setup {
   on_attach = on_attach,
   capabilities = capabilities
 }
+
+-- nvim_lsp.emmet_ls.setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   filetypes = { 'html', 'typescriptreact', "typescript.tsx", "css" }
+-- })
