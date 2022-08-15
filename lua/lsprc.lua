@@ -16,6 +16,8 @@ local on_attach = function(client, bufnr)
   --buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', '<leader>d', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  -- buf_set_keymap('n', '<space>f', '<Cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   -- formatting
   if client.server_capabilities.documentFormattingProvider then
@@ -115,4 +117,16 @@ nvim_lsp.sumneko_lua.setup {
 
 nvim_lsp.rust_analyzer.setup {
   on_attach = on_attach,
+}
+
+nvim_lsp.cssls.setup {
+  filetypes = { "typescript", "typescriptreact", "typescript.tsx", "css" },
+  on_attach = on_attach,
+  capabilities = capabilities
+}
+
+nvim_lsp.cssmodules_ls.setup {
+  on_attach = on_attach,
+  filetypes = { "typescript", "typescriptreact", "typescript.tsx", "css" },
+  capabilities = capabilities
 }
