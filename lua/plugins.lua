@@ -57,6 +57,7 @@ require('packer').startup(function(use)
   use 'williamboman/mason.nvim'
   use 'williamboman/mason-lspconfig.nvim'
   use 'glepnir/lspsaga.nvim'
+  use 'akinsho/toggleterm.nvim'
 
   -- 'Completion'--
   use 'hrsh7th/nvim-cmp'
