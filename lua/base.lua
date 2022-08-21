@@ -24,8 +24,8 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.nrformats = "bin,hex"
 vim.opt.swapfile = false
-vim.opt.clipboard:append{'unnamedplus'}
-vim.opt.completeopt="menu,menuone,noinsert"
+vim.opt.clipboard:append { 'unnamedplus' }
+vim.opt.completeopt = "menu,menuone,noinsert"
 vim.opt.ttyfast = true
 vim.opt.history = 100
 vim.cmd 'autocmd TermOpen * startinsert'
@@ -39,7 +39,7 @@ if executable('fcitx5')
   autocmd InsertEnter * call system(g:fcitx_state == 1 ? 'fcitx5-remote -c': 'fcitx5-remote -o') augroup END endif 
 ]]
 
-local has = function (x)
+local has = function(x)
   return vim.fn.has(x) == 1
 end
 
@@ -59,4 +59,4 @@ vim.cmd 'autocmd ColorScheme * highlight NonText ctermbg=none guibg=none'
 vim.cmd 'autocmd ColorScheme * highlight LineNr ctermbg=none guibg=none'
 vim.cmd 'autocmd ColorScheme * highlight Folded ctermbg=none guibg=none'
 vim.cmd 'autocmd ColorScheme * highlight EndOfBuffer ctermbg=none guibg=none'
-vim.cmd 'colorscheme nightfox'
+vim.cmd 'colorscheme Terafox'
