@@ -1,4 +1,4 @@
-require"base"
-require"keymap"
-require'plugins'
-require'lsprc'
+require "base"
+require "keymap"
+require 'plugins'
+require 'lsprc'

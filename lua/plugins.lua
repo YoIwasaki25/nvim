@@ -5,7 +5,6 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 vim.cmd [[packadd packer.nvim]]
-
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'lukas-reineke/indent-blankline.nvim'
@@ -74,6 +73,49 @@ require('packer').startup(function(use)
   -- 'prettier' --
   use 'jose-elias-alvarez/null-ls.nvim'
   use 'MunifTanjim/prettier.nvim'
+
+  -- 'chatGPT' --
+  use({
+    'jackMort/ChatGPT.nvim',
+    config = function()
+      require('chatgpt').setup({
+
+      })
+    end,
+    requires = {
+      'MunifTanjim/nui.nvim',
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+    }
+  })
+
+  -- 'Comment.nvim' --
+  use 'JoosepAlviste/nvim-ts-context-commentstring'
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
+  }
+
+  -- 'todotxt.nvim' --
+  use {
+    'arnarg/todotxt.nvim',
+    requires = { 'MunifTanjim/nui.nvim' },
+  }
+
+  -- install without yarn or npm
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
+
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+    ft = { "markdown" },
+  })
 
   if packer_bootstrap then
     require("packer").sync()

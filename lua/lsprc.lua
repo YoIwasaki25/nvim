@@ -1,5 +1,6 @@
 local status, nvim_lsp = pcall(require, "lspconfig")
 if (not status) then return end
+
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
@@ -15,8 +16,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   --buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', '<leader>d', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts) buf_set_keymap('n', '<leader>d', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   -- buf_set_keymap('n', '<space>f', '<Cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   -- formatting
@@ -89,7 +89,8 @@ cmp.setup {
 }
 
 -- setup --
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local pid = vim.fn.getpid()
 
 nvim_lsp.tsserver.setup {
   on_attach = on_attach,
@@ -98,7 +99,7 @@ nvim_lsp.tsserver.setup {
   capabilities = capabilities
 }
 
-nvim_lsp.sumneko_lua.setup {
+nvim_lsp.lua_ls.setup {
   on_attach = on_attach,
   settings = {
     Lua = {
@@ -125,6 +126,24 @@ nvim_lsp.cssls.setup {
   on_attach = on_attach,
   capabilities = capabilities
 }
+
+nvim_lsp.jedi_language_server.setup {}
+
+nvim_lsp.gopls.setup {}
+
+nvim_lsp.html.setup {
+  capabilities = capabilities,
+}
+
+nvim_lsp.omnisharp.setup {
+  capabilities = capabilities,
+  on_attach = function(_, bufnr)
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  end,
+  -- cmd = { "/Users/yoiwasaki/.local/share/nvim/mason/bin/omnisharp/run", "--languageserver", "--hostPID", tostring(pid), }
+  cmd = { "/Users/yoiwasaki/Downloads/omnisharp-osx/run", "--languageserver", "--hostPID", tostring(pid), }
+}
+
 
 -- nvim_lsp.emmet_ls.setup({
 --   on_attach = on_attach,
