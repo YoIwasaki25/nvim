@@ -24,7 +24,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = vim.api.nvim_create_augroup("Format", { clear = true }),
       buffer = bufnr,
-      callback = function() vim.lsp.buf.formatting_seq_sync() end
+      callback = function() vim.lsp.buf.format() end
     })
   end
 end
@@ -134,19 +134,3 @@ nvim_lsp.gopls.setup {}
 nvim_lsp.html.setup {
   capabilities = capabilities,
 }
-
-nvim_lsp.omnisharp.setup {
-  capabilities = capabilities,
-  on_attach = function(_, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  end,
-  -- cmd = { "/Users/yoiwasaki/.local/share/nvim/mason/bin/omnisharp/run", "--languageserver", "--hostPID", tostring(pid), }
-  cmd = { "/Users/yoiwasaki/Downloads/omnisharp-osx/run", "--languageserver", "--hostPID", tostring(pid), }
-}
-
-
--- nvim_lsp.emmet_ls.setup({
---   on_attach = on_attach,
---   capabilities = capabilities,
---   filetypes = { 'html', 'typescriptreact', "typescript.tsx", "css" }
--- })

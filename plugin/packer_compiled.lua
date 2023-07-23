@@ -116,6 +116,12 @@ _G.packer_plugins = {
     path = "/Users/yoiwasaki/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
+  ["copilot.vim"] = {
+    config = { "\27LJ\2\nó\2\0\0\a\0\17\0\"6\0\0\0009\0\1\0+\1\1\0=\1\2\0006\0\0\0009\0\3\0009\0\4\0\18\1\0\0'\3\5\0'\4\6\0'\5\a\0005\6\b\0B\1\5\1\18\1\0\0'\3\5\0'\4\t\0'\5\n\0B\1\4\1\18\1\0\0'\3\5\0'\4\v\0'\5\f\0B\1\4\1\18\1\0\0'\3\5\0'\4\r\0'\5\14\0B\1\4\1\18\1\0\0'\3\5\0'\4\15\0'\5\16\0B\1\4\1K\0\1\0\28<Plug>(copilot-suggest)\n<C-s>\28<Plug>(copilot-dismiss)\n<C-]>\29<Plug>(copilot-previous)\n<C-k>\25<Plug>(copilot-next)\n<C-j>\1\0\4\texpr\2\vsilent\2\21replace_keycodes\1\vscript\2\27copilot#Accept(\"<CR>\")\n<C-g>\6i\bset\vkeymap\23copilot_no_tab_map\6g\bvim\0" },
+    loaded = true,
+    path = "/Users/yoiwasaki/.local/share/nvim/site/pack/packer/start/copilot.vim",
+    url = "https://github.com/github/copilot.vim"
+  },
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/Users/yoiwasaki/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
@@ -142,8 +148,10 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-lualine/lualine.nvim"
   },
   ["markdown-preview.nvim"] = {
-    loaded = true,
-    path = "/Users/yoiwasaki/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim",
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/yoiwasaki/.local/share/nvim/site/pack/packer/opt/markdown-preview.nvim",
     url = "https://github.com/iamcco/markdown-preview.nvim"
   },
   ["mason-lspconfig.nvim"] = {
@@ -288,26 +296,41 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: telescope-frecency.nvim
-time([[Config for telescope-frecency.nvim]], true)
-try_loadstring("\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\rfrecency\19load_extension\14telescope\frequire\0", "config", "telescope-frecency.nvim")
-time([[Config for telescope-frecency.nvim]], false)
--- Config for: ChatGPT.nvim
-time([[Config for ChatGPT.nvim]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\fchatgpt\frequire\0", "config", "ChatGPT.nvim")
-time([[Config for ChatGPT.nvim]], false)
--- Config for: Comment.nvim
-time([[Config for Comment.nvim]], true)
-try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
-time([[Config for Comment.nvim]], false)
+-- Setup for: markdown-preview.nvim
+time([[Setup for markdown-preview.nvim]], true)
+try_loadstring("\27LJ\2\n=\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\2\0\0\rmarkdown\19mkdp_filetypes\6g\bvim\0", "setup", "markdown-preview.nvim")
+time([[Setup for markdown-preview.nvim]], false)
 -- Config for: telescope-file-browser.nvim
 time([[Config for telescope-file-browser.nvim]], true)
 try_loadstring("\27LJ\2\nQ\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\17file_browser\19load_extension\14telescope\frequire\0", "config", "telescope-file-browser.nvim")
 time([[Config for telescope-file-browser.nvim]], false)
+-- Config for: ChatGPT.nvim
+time([[Config for ChatGPT.nvim]], true)
+try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\fchatgpt\frequire\0", "config", "ChatGPT.nvim")
+time([[Config for ChatGPT.nvim]], false)
+-- Config for: telescope-frecency.nvim
+time([[Config for telescope-frecency.nvim]], true)
+try_loadstring("\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\rfrecency\19load_extension\14telescope\frequire\0", "config", "telescope-frecency.nvim")
+time([[Config for telescope-frecency.nvim]], false)
+-- Config for: Comment.nvim
+time([[Config for Comment.nvim]], true)
+try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
+time([[Config for Comment.nvim]], false)
 -- Config for: nvim-autopairs
 time([[Config for nvim-autopairs]], true)
 try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
 time([[Config for nvim-autopairs]], false)
+-- Config for: copilot.vim
+time([[Config for copilot.vim]], true)
+try_loadstring("\27LJ\2\nó\2\0\0\a\0\17\0\"6\0\0\0009\0\1\0+\1\1\0=\1\2\0006\0\0\0009\0\3\0009\0\4\0\18\1\0\0'\3\5\0'\4\6\0'\5\a\0005\6\b\0B\1\5\1\18\1\0\0'\3\5\0'\4\t\0'\5\n\0B\1\4\1\18\1\0\0'\3\5\0'\4\v\0'\5\f\0B\1\4\1\18\1\0\0'\3\5\0'\4\r\0'\5\14\0B\1\4\1\18\1\0\0'\3\5\0'\4\15\0'\5\16\0B\1\4\1K\0\1\0\28<Plug>(copilot-suggest)\n<C-s>\28<Plug>(copilot-dismiss)\n<C-]>\29<Plug>(copilot-previous)\n<C-k>\25<Plug>(copilot-next)\n<C-j>\1\0\4\texpr\2\vsilent\2\21replace_keycodes\1\vscript\2\27copilot#Accept(\"<CR>\")\n<C-g>\6i\bset\vkeymap\23copilot_no_tab_map\6g\bvim\0", "config", "copilot.vim")
+time([[Config for copilot.vim]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Filetype lazy-loads
+time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-preview.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
+time([[Defining lazy-load filetype autocommands]], false)
+vim.cmd("augroup END")
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then
