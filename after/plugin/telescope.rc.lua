@@ -1,6 +1,9 @@
 local status, telescope = pcall(require, "telescope")
 if (not status) then return end
 
+local actions = require('telescope.actions')
+local builtin = require("telescope.builtin")
+
 local function telescope_buffer_dir()
   return vim.fn.expand('%:p:h')
 end
@@ -11,11 +14,11 @@ telescope.setup {
   defaults = {
     mappings = {
       n = {
-        ["q"] = require('telescope.actions').close
+        ["q"] = actions.close
       }
     },
     file_ignore_patterns = {
-      "%.git/", "node_modules/.*", ".DS_Store"
+      "%.git/", "node_modules/.*", ".DS_Store", "*.png", "*.jpeg", ".jpg"
     },
   },
   pickers = {
@@ -75,6 +78,10 @@ end)
 
 vim.keymap.set('n', "<leader>b", function()
   require('telescope.builtin').buffers()
+end)
+
+vim.keymap.set('n', ';e', function()
+  builtin.diagnostics()
 end)
 
 -- 'Telescope-frecency.nvim' -----------------------------------------------------------------------------------------------------------

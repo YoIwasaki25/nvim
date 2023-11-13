@@ -16,8 +16,8 @@ vim.opt.hidden = true
 vim.opt.winblend = 20
 vim.opt.pumblend = 20
 vim.opt.termguicolors = true
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
@@ -28,6 +28,7 @@ vim.opt.clipboard:append { 'unnamedplus' }
 vim.opt.completeopt = "menu,menuone,noinsert"
 vim.opt.ttyfast = true
 vim.opt.history = 100
+vim.opt.laststatus = 3
 vim.cmd 'autocmd TermOpen * startinsert'
 vim.cmd [[
 
@@ -59,4 +60,4 @@ vim.cmd 'autocmd ColorScheme * highlight NonText ctermbg=none guibg=none'
 vim.cmd 'autocmd ColorScheme * highlight LineNr ctermbg=none guibg=none'
 vim.cmd 'autocmd ColorScheme * highlight Folded ctermbg=none guibg=none'
 vim.cmd 'autocmd ColorScheme * highlight EndOfBuffer ctermbg=none guibg=none'
-vim.cmd 'colorscheme Terafox'
+vim.cmd 'colorscheme nord'
