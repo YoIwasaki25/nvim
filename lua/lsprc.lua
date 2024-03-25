@@ -182,8 +182,27 @@ nvim_lsp.cssls.setup {
 
 nvim_lsp.jedi_language_server.setup {}
 
-nvim_lsp.gopls.setup {}
+nvim_lsp.gopls.setup {
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+      gofumpt = true,
+    },
+  },
+}
 
 nvim_lsp.html.setup {
   capabilities = capabilities,
+}
+
+nvim_lsp.csharp_ls.setup {
+  on_attach = on_attach,
+}
+
+nvim_lsp.dartls.setup {
+  cmd = { '/Users/yoiwasaki/dev/flutter/flutter/bin/dart', 'language-server', '--protocol=lsp' },
+  filetypes = { 'dart' },
 }

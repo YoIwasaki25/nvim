@@ -8,7 +8,7 @@ ts.setup {
   },
   indent = {
     enable = true,
-    disable = {},
+    disable = { 'dart' },
     ensure_installed
   },
   ensure_installed = {

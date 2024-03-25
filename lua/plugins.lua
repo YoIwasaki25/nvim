@@ -35,7 +35,7 @@ require('packer').startup(function(use)
   }
   use 'windwp/nvim-ts-autotag'
   use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.0',
+    'nvim-telescope/telescope.nvim', tag = '0.1.4',
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
   use {
@@ -130,12 +130,9 @@ require('packer').startup(function(use)
   --     requires = { 'MunifTanjim/nui.nvim' },
   -- }
 
-  -- install without yarn or npm
   use({
     "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
-    ft = { "markdown" },
+    run = function() vim.fn["mkdp#util#install"]() end,
   })
 
   use {
