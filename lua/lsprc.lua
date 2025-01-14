@@ -17,8 +17,12 @@ local on_attach = function(client, bufnr)
   --buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts) buf_set_keymap('n', '<leader>d', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  -- buf_set_keymap('n', '<space>f', '<Cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
+  vim.cmd [[
+  augroup Format
+    autocmd!
+    autocmd BufWritePre *.dart lua vim.lsp.buf.format()
+  augroup END
+]]
   -- formatting
   if client.server_capabilities.documentFormattingProvider then
     vim.api.nvim_create_autocmd("BufWritePre", {
@@ -205,4 +209,24 @@ nvim_lsp.csharp_ls.setup {
 nvim_lsp.dartls.setup {
   cmd = { '/Users/yoiwasaki/dev/flutter/flutter/bin/dart', 'language-server', '--protocol=lsp' },
   filetypes = { 'dart' },
+  init_options = {
+    closingLabels = true,
+    flutterOutline = true,
+    onlyAnalyzeProjectsWithOpenFiles = true,
+    outline = true,
+    suggestFromUnimportedLibraries = true
+  },
+  settings = {
+    dart = {
+      completeFunctionCalls = true,
+      showTodos = true
+    }
+  },
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+nvim_lsp.clangd.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
 }

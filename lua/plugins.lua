@@ -27,7 +27,12 @@ require('packer').startup(function(use)
   use 'kylechui/nvim-surround'
   use 'tpope/vim-commentary'
   use 'norcalli/nvim-colorizer.lua'
-  use 'akinsho/bufferline.nvim'
+  use {
+    'akinsho/bufferline.nvim',
+    -- tag = "*",
+    requires = 'nvim-tree/nvim-web-devicons'
+  }
+
   --coc.nvim の <CR>と競合する
   use {
     'windwp/nvim-autopairs',
@@ -97,7 +102,12 @@ require('packer').startup(function(use)
   use 'folke/zen-mode.nvim'
 
   -- 'prettier' --
-  use 'jose-elias-alvarez/null-ls.nvim'
+  use {
+    'nvimtools/none-ls.nvim',
+    requires = {
+      "nvimtools/none-ls-extras.nvim",
+    }
+  }
   use 'MunifTanjim/prettier.nvim'
 
   -- 'chatGPT' --
@@ -168,7 +178,7 @@ require('packer').startup(function(use)
           auto_trigger = true,
           debounce = 10,
           keymap = {
-            accept = "<M-l>",
+            accept = "<Tab>",
             accept_word = false,
             accept_line = false,
             next = "<M-]>",
